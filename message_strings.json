@@ -1,0 +1,18 @@
+{
+  "unknown": "Sorry, I didn't understand that command",
+  "start": "Hi there, welcome to the Otaniemi Recylic bot!",
+  "dibs": [
+      "Your item has been dibsed by ",
+      ", username: @",
+      ". \nCurrent queue:\n1. @"
+  ],
+  "new_item": "It seems you want to add a new item, great! Let's get started. First, give me the name of the item you want to give away. Type \"Quit\" at any point to quit the process",
+  "name": "Next, please give me the description of the item(s)",
+  "description": "Now tell me the price of the item. If it's free, simply send \"free\"",
+  "price": "Next, please send me a picture of the item. You may include a caption in the picture. In case you don't want to include pictures, send \"/next\"",
+  "photo": "Continue sending pictures if you like or send \"/next\" to move on",
+  "need_pic": "Please provide one or multiple pictures!",
+  "done": "Thank you for your item, it will now be posted to the broadcasting channel! Once someone claims the item, I will notify you with a message!",
+  "broadcast_pic": "The items related can be seen in the picture above",
+  "broadcast_album": "The items related can be seen in the album above"
+}
