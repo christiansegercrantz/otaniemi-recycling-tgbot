@@ -16,27 +16,35 @@ dibsKeyboard = InlineKeyboardMarkup([[InlineKeyboardButton("Dibs", callback_data
 
 
 def newitem(update, context):
+    dbMan = dbManager(db_file_path)
+    dbMan.create_item_for_sale(update.message.from_user.id)
     update.message.reply_text("It seems you want to add a new item, great! Let's get started. First, give me the name of the item you want to give away. Type \"Quit\" at any point to stop quit the process.")
     return NAME
 
 def name(update, context):
+    dbMan = dbManager(db_file_path)
+    dbMan.set_item_for_sale(update.message.text, NAME)
     update.message.reply_text("Next please me the description of the item(s).")
-    i.name(update.message.text)
     return DESC
 
 def description(update, context):
+    dbMan = dbManager(db_file_path)
+    dbMan.set_item_for_sale(update.message.text, DESC)
     update.message.reply_text("Now tell me the price of the item. If it's free, simple send the 'free'")
     i.desc(update.message.text)
     return PRICE
 
 def price(update, context):
+    dbMan = dbManager(db_file_path)
+    dbMan.set_item_for_sale(update.message.text, PRICE)
     update.message.reply_text("Next please send me a picture of the item, you may include a caption in the picture. In case you don't want to include pictures, send \"/next\".")
-    i.price(update.message.text)
     return PICTURE
 
 def photo(update, context):
+    dbMan = dbManager(db_file_path)
+    dbMan.set_item_for_sale(update.message.text, PICTURE)
     update.message.reply_text("Continue sending pictures if you like, or send \"/next\" to move on.")
-    i.photo(update.message.photo[-1].file_id, update.message.caption)
+    i.photo(update.message.photo[-1].file_id, update.message.caption) #This needs to be transfered!!!
     return PICTURE
 
 def need_pic(update, context): 

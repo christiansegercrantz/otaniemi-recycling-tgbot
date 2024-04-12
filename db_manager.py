@@ -1,4 +1,5 @@
 import sqlite3
+from newitem import NAME, DESC, PRICE, PICTURE, DONE
 
 from sqlite3 import Error
 import os
@@ -83,18 +84,18 @@ class dbManager:
                 print("Error! cannot create the database connection.")
             self.close_connection()
 
-        def create_item_for_sale(self, item):
+        def create_item_for_sale(self, seller_id):
             """
             Create a new item into the items_for_sale table
             :param conn:
             :param item:
             :return: item id
             """
-            sql = ''' INSERT INTO items_for_sale(seller_id,status,channel_message_id,posted_date,name,description,price,picture_message_ids)
-                        VALUES(?,?,?,?,?,?,?,?) '''
+            sql = ''' INSERT INTO items_for_sale(seller_id, status)
+                        VALUES(?,?) '''
             self.create_connection()
             cur = self.conn.cursor()
-            cur.execute(sql, item)
+            cur.execute(sql, seller_id, 0)
             self.conn.commit()
 
             self.close_connection()
@@ -137,20 +138,43 @@ class dbManager:
             self.close_connection()
             return cur.lastrowid
         
-        def set_item_for_sale_name(self, name):
+        def set_item_for_sale(self, param, status, item_id):
             """
             update name of a item
             :param name:
             :return: item id
             """
+            if status == NAME:
+                to_set = "name"
+            elif status == DESC:
+                to_set = "description"
+            elif status == PRICE:
+                to_set = "price"
+            elif status == PICTURE:
+                to_set = "picture_message_ids"
+            elif status == DONE:
+                to_set = "channel_message_id"
+
             sql = ''' UPDATE items_for_sale
-                    SET name = ? ,
-                    SET status = ?
-                    WHERE id = ?'''
+                    SET %s = ? ,
+                    SET status = %d
+                    WHERE id = ?''' % (to_set, status)
             self.create_connection()
             cur = self.conn.cursor()
-            cur.execute(sql, name)
+            cur.execute(sql, param, item_id)
             self.conn.commit()
+        
+        def select_item_by_id(self, seller_id):
+            """
+            Query tasks by priority
+            :param conn: the Connection object
+            :param priority:
+            :return:
+            """
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM items_for_sale WHERE seller_id=?", (item_id))
+
+            rows = cur.fetchall()
 
     instance = None
     def __init__(self, arg):
